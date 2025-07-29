@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdbool.h>
 
 typedef struct {
   uint16_t exp_hours;
@@ -23,6 +24,16 @@ typedef struct {
   DateConfig*       date;
   ExperimentConfig* config;
 } SessionConfig;
+
+typedef struct {
+  ExperimentConfig MTD_exp;
+  DateConfig       MTD_date; 
+} MetaData;
+
+typedef struct {
+  SessionConfig* config;
+  bool           is_active;
+} ExperimentSession;
 
 TimeConfig createTimeConfig(uint16_t hours, 
                             uint16_t minutes,
