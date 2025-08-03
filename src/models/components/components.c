@@ -15,6 +15,7 @@ void RenderHeaderButton(Clay_String text, AppContext* ctx) {
       .fontSize = 16,
       .textColor = {255, 255, 255, 255},
     }));
+  }
 }
 
 void RenderHeaderDropdownButton(Clay_String text, AppContext* ctx) {
@@ -27,6 +28,7 @@ void RenderHeaderDropdownButton(Clay_String text, AppContext* ctx) {
       .fontSize = 16,
       .textColor = {255, 255, 255, 255},
     }));
+  }
 }
 
 void SideBar(AppContext* ctx) {
@@ -64,7 +66,7 @@ void SideBar(AppContext* ctx) {
       .layout = {
         .sizing = expandLayout,
       } 
-    }) {};
+    }) {}
   };
 }
 
@@ -81,22 +83,18 @@ void TopMenuBar(AppContext* ctx) {
         .width  = CLAY_SIZING_GROW(),
       },
       .childGap = 16,
-      .childAlignment = {
-        .y = CLAY_ALIGN_Y_CENTER,
-      },
+      .childAlignment = {.y = CLAY_ALIGN_Y_CENTER},
     }
   }) {
     CLAY({
       .id = CLAY_ID("file-button"),
-      .layout = {
-        .padding = {16, 8},
-       },
+      .layout = {.padding = {16, 8},},
       .backgroundColor = {140, 140, 140, 255},
       .cornerRadius = {4, 4, 4, 4},
     }) {
       CLAY_TEXT(CLAY_STRING("File"), CLAY_TEXT_CONFIG({
-        .fontSize = 16,
-        .textColor = {255, 255, 255, 255},
+          .fontSize = 16,
+          .textColor = {255, 255, 255, 255},
       }));
 
       CLAY({
@@ -105,9 +103,7 @@ void TopMenuBar(AppContext* ctx) {
         .backgroundColor = {40, 40, 40, 255},
         .layout = {
           .layoutDirection = CLAY_TOP_TO_BOTTOM,
-          .sizing = {
-            .width = CLAY_SIZING_FIXED(200),
-          } 
+          .sizing = {.width = CLAY_SIZING_FIXED(200)} 
         }
       }) {
         RenderHeaderDropdownButton(CLAY_STRING("New"), ctx);
