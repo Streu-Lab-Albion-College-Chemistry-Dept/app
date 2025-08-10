@@ -14,7 +14,7 @@ Font userFonts[4];
 const int FONT_ID_BODY = 0;
 
 void ErrorHandler(Clay_ErrorData error) {
-  // printf("Error: %s \n", "something happened");
+  printf("Error: %s \n", "something happened");
 }
 
 int main() {
