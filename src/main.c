@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <raylib.h>
-#include "../include/clay/clay.h"
-#include "./models/components/components.h"
+#include <clay/clay.h>
+#include "./models/components/home/components.h"
 #include "../include/renderer/clay_renderer_raylib.c"
 #include "../src/utils/utils.h"
 
