@@ -71,3 +71,16 @@ void DemoView(AppContext* ctx) {
     }
   }
 }
+
+void HandleTabClick(
+  Clay_ElementId id,
+  Clay_PointerData pointerData,
+  intptr_t userData
+) {
+  if (pointerData.state == CLAY_POINTER_DATA_PRESSED_THIS_FRAME) {
+    TabPropsArray* tabs = (TabPropsArray*)userData;
+    if (userData >= 0 && userData < tabs->length) {
+      tabs->selectedIndex = userData;
+    }
+  }
+}

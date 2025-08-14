@@ -5,10 +5,10 @@
 void ContextTabs(AppContext* ctx);
 void DemoView(AppContext* ctx);
 
-// callback
+// callback handler
 void HandleTabClick(
-  Clay_ElementId elementId, 
-  Clay_PointerData pointerData, 
+  Clay_ElementId id,
+  Clay_PointerData pointerData,
   intptr_t userData
 );
 
@@ -21,4 +21,5 @@ typedef struct {
 typedef struct {
   TabProps* props;
   uint16_t length;
+  uint16_t selectedIndex;
 } TabPropsArray;
