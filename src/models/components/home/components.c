@@ -1,5 +1,5 @@
-#include "../../../include/clay/clay.h"
 #include "./components.h"
+#include "../tabs/tabs.h"
 #include <stdlib.h>
 
 /*
@@ -122,6 +122,22 @@ void SideBar(AppContext* ctx) {
   };
 }
 
+void Tabs(Clay_String title) {
+  CLAY({
+    .backgroundColor = {123, 234, 144, 178},
+    .cornerRadius = CLAY_CORNER_RADIUS(4),
+    .layout = {
+      .padding = {16, 16, 12, 12},
+      .sizing = {.width = CLAY_SIZING_FIXED(80)}
+    },
+  }) {
+    CLAY_TEXT(title, CLAY_TEXT_CONFIG({
+      .fontSize  = 16,
+      .textColor = {255, 255, 255, 255}
+    }));
+  }
+}
+
 void TopMenuBar(AppContext* ctx) {
   CLAY({
     .backgroundColor = {130, 35, 180, 255},
@@ -191,17 +207,43 @@ void TopMenuBar(AppContext* ctx) {
 }
 
 void MainContent(AppContext* ctx) {
+  TabPropsArray tabsList = (TabPropsArray) {
+    .length = 2,
+    .props = (TabProps[]) {
+      {.title = CLAY_STRING("Main"), .contentView = ContextTabs},
+      {.title = CLAY_STRING("Exps"), .contentView = DemoView},
+    },
+  };
   CLAY({
     .id = CLAY_ID("main-content"),
     .clip = {.vertical = true, .childOffset = Clay_GetScrollOffset()},
     .cornerRadius = {12, 12, 12, 12},
     .backgroundColor = {130, 145, 34, 200},
     .layout = {
+      .childGap = 8,
       .layoutDirection = CLAY_TOP_TO_BOTTOM,
+      .padding = {8, 8, 8, 8},
       .sizing = {
         .width  = CLAY_SIZING_GROW(0),
         .height = CLAY_SIZING_GROW(0),
       },
     }
-  }) {}
+  }) {
+    uint16_t selectedTabIndex = 1;
+
+    CLAY({
+      .layout = {
+        .layoutDirection = CLAY_LEFT_TO_RIGHT,
+        .childGap = 8,
+      }
+    })  {
+      for (int i = 0; i < tabsList.length; ++i) { Tabs(tabsList.props[i].title); }
+    }
+    
+    TabProps view = tabsList.props[selectedTabIndex];
+    view.contentView(ctx);
+
+    ContextTabs(ctx);
+
+  }
 }
