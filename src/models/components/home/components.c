@@ -243,8 +243,15 @@ void MainContent(AppContext* ctx) {
       for (uint8_t i = 0; i < tabsList.length; ++i) { 
         interface[i].currentIndex = i;
         interface[i].tabsList = &tabsList;
+        
+        bool isSelected = (i == tabsList.selectedIndex);
 
-        CLAY({.id = CLAY_IDI("tabs", i) }) { 
+        CLAY({
+          .id = CLAY_IDI("tabs", i),
+          .backgroundColor = isSelected 
+            ? (Clay_Color) {123, 223, 234, 100}
+            : (Clay_Color) {233, 100, 76, 200},
+        }) { 
           Clay_OnHover(HandleTabClick, (intptr_t)&interface[i]);
           Tabs(tabsList.props[i].title); 
         }
@@ -254,4 +261,18 @@ void MainContent(AppContext* ctx) {
     TabProps view = tabsList.props[tabsList.selectedIndex];
     view.contentView(ctx);
   }
+}
+
+void Terminal(AppContext* ctx) {
+  CLAY({
+    .layout = {
+      .sizing = {
+        .width = CLAY_SIZING_GROW(0),
+        .height = CLAY_SIZING_FIXED(80),
+      },
+      .childGap = 16,
+    },
+    .backgroundColor = {140, 123, 109, 111},
+    .cornerRadius = {8, 8, 8, 8}
+  }) {}
 }

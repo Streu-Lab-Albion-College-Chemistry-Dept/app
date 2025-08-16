@@ -5,6 +5,7 @@
 void SideBar(AppContext* ctx);
 void TopMenuBar(AppContext* ctx);
 void MainContent(AppContext* ctx);
+void Terminal(AppContext* ctx);
 void RenderHeaderButton(Clay_String text, AppContext* ctx);
 void RenderHeaderDropdownButton(Clay_String text, AppContext* ctx);
 void ExpConfig(AppContext* ctx);
