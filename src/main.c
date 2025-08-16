@@ -92,7 +92,20 @@ int main() {
         },
       }) {
         SideBar(&context);
-        MainContent(&context);
+
+        CLAY({
+          .layout = {
+            .layoutDirection = CLAY_TOP_TO_BOTTOM,
+            .childGap = 16,
+            .sizing = {
+              .width = CLAY_SIZING_GROW(0),
+              .height = CLAY_SIZING_GROW(0),
+            }
+          }
+        }) {
+          MainContent(&context);
+          Terminal(&context);
+        }
       }
     }
     Clay_RenderCommandArray renderCommands = Clay_EndLayout();
