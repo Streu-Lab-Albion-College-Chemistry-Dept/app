@@ -77,10 +77,11 @@ void HandleTabClick(
   Clay_PointerData pointerData,
   intptr_t userData
 ) {
+  TabsInterface* tabs = (TabsInterface*)userData;
   if (pointerData.state == CLAY_POINTER_DATA_PRESSED_THIS_FRAME) {
-    TabPropsArray* tabs = (TabPropsArray*)userData;
-    if (userData >= 0 && userData < tabs->length) {
-      tabs->selectedIndex = userData;
+    printf("Clicked tab %d\n", (int)tabs->tabsList->selectedIndex);
+    if (tabs->currentIndex >= 0 && tabs->currentIndex < tabs->tabsList->length) {
+      tabs->tabsList->selectedIndex = tabs->currentIndex;
     }
   }
 }
