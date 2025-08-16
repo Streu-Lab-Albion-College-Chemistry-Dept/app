@@ -206,14 +206,18 @@ void TopMenuBar(AppContext* ctx) {
   }
 }
 
+static TabPropsArray tabsList = (TabPropsArray) {
+  .length = 2,
+  .selectedIndex = 0,
+  .props = (TabProps[]) {
+    {.title = CLAY_STRING("Main"), .contentView = ContextTabs},
+    {.title = CLAY_STRING("Exps"), .contentView = DemoView},
+  },
+};
+
+static TabsInterface interface[MAX_TABS];
+
 void MainContent(AppContext* ctx) {
-  TabPropsArray tabsList = (TabPropsArray) {
-    .length = 2,
-    .props = (TabProps[]) {
-      {.title = CLAY_STRING("Main"), .contentView = ContextTabs},
-      {.title = CLAY_STRING("Exps"), .contentView = DemoView},
-    },
-  };
   CLAY({
     .id = CLAY_ID("main-content"),
     .clip = {.vertical = true, .childOffset = Clay_GetScrollOffset()},
@@ -229,7 +233,6 @@ void MainContent(AppContext* ctx) {
       },
     }
   }) {
-    uint16_t selectedTabIndex = 1;
 
     CLAY({
       .layout = {
@@ -237,13 +240,18 @@ void MainContent(AppContext* ctx) {
         .childGap = 8,
       }
     })  {
-      for (int i = 0; i < tabsList.length; ++i) { Tabs(tabsList.props[i].title); }
+      for (uint8_t i = 0; i < tabsList.length; ++i) { 
+        interface[i].currentIndex = i;
+        interface[i].tabsList = &tabsList;
+
+        CLAY({.id = CLAY_IDI("tabs", i) }) { 
+          Clay_OnHover(HandleTabClick, (intptr_t)&interface[i]);
+          Tabs(tabsList.props[i].title); 
+        }
+      }
     }
     
-    TabProps view = tabsList.props[selectedTabIndex];
+    TabProps view = tabsList.props[tabsList.selectedIndex];
     view.contentView(ctx);
-
-    ContextTabs(ctx);
-
   }
 }
