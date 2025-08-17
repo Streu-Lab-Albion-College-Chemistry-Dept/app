@@ -1,4 +1,5 @@
 #include "./tabs.h"
+#include "../forms/forms.h"
 #include <clay/clay.h>
 #include <raylib.h>
 
@@ -19,11 +20,11 @@ void ContextTabs(AppContext* ctx) {
     CLAY({
       .backgroundColor = {255, 255, 255, 100},
       .layout = {
-        .childGap = 16,
+        .childGap = 8,
         .layoutDirection = width < MAX_WIDTH 
           ? CLAY_TOP_TO_BOTTOM 
           : CLAY_LEFT_TO_RIGHT,
-        .padding = CLAY_PADDING_ALL(16),
+        .padding = CLAY_PADDING_ALL(8),
         .sizing = {
           .height = CLAY_SIZING_GROW(0),
           .width = CLAY_SIZING_PERCENT(0.5)
@@ -36,8 +37,11 @@ void ContextTabs(AppContext* ctx) {
         .childOffset = Clay_GetScrollOffset(),
       }
     }) {
-      for (int i = 0; i < ctx->APP_SESSION_total_experiments; ++i) {
+
+      
+      for (uint8_t i = 0; i < ctx->APP_SESSION_total_experiments; ++i) {
         CLAY({
+          .id = CLAY_IDI("exp-boxes", i),
           .backgroundColor = {255, 255, 255, 255},
           .cornerRadius = CLAY_CORNER_RADIUS(8),
           .layout = {
@@ -50,6 +54,11 @@ void ContextTabs(AppContext* ctx) {
             .padding = {10, 10, 10, 10}
           }
         });
+
+        if (Clay_PointerOver(CLAY_IDI("exp-boxes", i))) {
+          printf("Hovering over index %i\n", i);
+          experimentFormView(ctx);
+        }
       }
 
     }
@@ -57,7 +66,7 @@ void ContextTabs(AppContext* ctx) {
     CLAY({
       .layout = {
         .layoutDirection = CLAY_TOP_TO_BOTTOM,
-        .childGap = 16,
+        .childGap = 8,
         .padding = CLAY_PADDING_ALL(8),
         .sizing = {
           .width = CLAY_SIZING_GROW(0),

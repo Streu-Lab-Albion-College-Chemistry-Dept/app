@@ -1,3 +1,4 @@
+#include "../profiles/profiles.h"
 #include "./components.h"
 #include "../tabs/tabs.h"
 #include <stdlib.h>
@@ -8,10 +9,10 @@
 void RenderHeaderButton(Clay_String text, AppContext* ctx) {
   CLAY({
     .layout = {
-      .padding = {8, 8, 8, 8},
+      .padding = CLAY_PADDING_ALL(8),
       .childAlignment = {.y = CLAY_ALIGN_Y_CENTER},
     },
-    .cornerRadius = {4, 4, 4, 4},
+    .cornerRadius = CLAY_CORNER_RADIUS(4),
     .backgroundColor = {165, 205, 125, 255},
   }) {
     CLAY_TEXT(text, CLAY_TEXT_CONFIG({
@@ -25,10 +26,10 @@ void RenderHeaderDropdownButton(Clay_String text, AppContext* ctx) {
   CLAY({
     .id = CLAY_ID("file-menu-button"),
     .layout = {
-      .padding = {8, 8, 8, 8},
+      .padding = CLAY_PADDING_ALL(8),
       .sizing = {.width = CLAY_SIZING_GROW(0)}
     },
-    .cornerRadius = {4, 4, 4, 4},
+    .cornerRadius = CLAY_CORNER_RADIUS(4),
     .backgroundColor = {140, 140, 140, 255},
   }) {
     CLAY_TEXT(text, CLAY_TEXT_CONFIG({
@@ -49,68 +50,40 @@ void SideBar(AppContext* ctx) {
     .layout = {
       .layoutDirection = CLAY_TOP_TO_BOTTOM,
       .childGap        = 16,
-      .padding         = {8, 8, 8, 8},
+      .padding         = CLAY_PADDING_ALL(8),
       .sizing = {
         .width  = CLAY_SIZING_FIXED(250),
         .height = CLAY_SIZING_GROW(0),
       }
     },
     .backgroundColor = {105, 48, 140, 255},
-    .cornerRadius = {12, 12, 12, 12},
+    .cornerRadius = CLAY_CORNER_RADIUS(12)
   }) {
     CLAY({
-      .cornerRadius = {8, 8, 8, 8},
+      .cornerRadius = CLAY_CORNER_RADIUS(8),
       .backgroundColor = {23, 45, 56, 200},
       .id = CLAY_ID("info-bar"),
       .layout = {
         .layoutDirection = CLAY_TOP_TO_BOTTOM,
-        .padding = {8, 8, 8, 8},
+        .padding = CLAY_PADDING_ALL(8),
         .sizing = {
           .height = CLAY_SIZING_FIXED(242),
           .width  = CLAY_SIZING_GROW(0),
         }
       },
     }) {
-      Clay_String appActivity = 
-         ctx->APP_SESSION_alive
-         ? CLAY_STRING("Application: On")
-         : CLAY_STRING("Application: Off");
-
-      Clay_String sessionActivity = 
-        ctx->APP_SESSION_active
-        ? CLAY_STRING("Ongoing Session")
-        : CLAY_STRING("No active session");
-
-      Clay_String activeUser = 
-        ctx->APP_SESSION_current_user
-        ? CLAY_STRING("User: Lab Member")
-        : CLAY_STRING("User: system");
-
-      CLAY_TEXT(appActivity, CLAY_TEXT_CONFIG({
-        .fontSize  = 16,
-        .textColor = {255, 255, 255, 255},
-      }));
-      
-      CLAY_TEXT(activeUser, CLAY_TEXT_CONFIG({
-        .fontSize  = 20,
-        .textColor = {123, 233, 86, 105},
-      }));
-
-      CLAY_TEXT(sessionActivity, CLAY_TEXT_CONFIG({
-        .fontSize  = 16,
-        .textColor = {255, 255, 255, 255},
-      }));
+      UserProfileWidget(ctx);
     }
     
     CLAY({
       .id = CLAY_ID("exp-configs"),
-      .cornerRadius = {8, 8, 8, 8},
+      .cornerRadius = CLAY_CORNER_RADIUS(8),
       .backgroundColor = {13, 34, 23, 150},
       .layout = {
         .sizing  = expandLayout,
         .layoutDirection = CLAY_TOP_TO_BOTTOM,
         .childGap = 16,
-        .padding = {8, 8, 8, 8},
+        .padding = CLAY_PADDING_ALL(8),
       },
     }) {
       RenderHeaderButton(CLAY_STRING("Dr Streu San"), ctx);
