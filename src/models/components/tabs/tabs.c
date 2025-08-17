@@ -1,39 +1,92 @@
 #include "./tabs.h"
 #include <clay/clay.h>
+#include <raylib.h>
+
+#define MAX_WIDTH 1500
 
 void ContextTabs(AppContext* ctx) {
+  float width = GetScreenWidth();
   CLAY({
-    .backgroundColor = {123, 23, 156, 79},
     .layout = {
-      .childGap = 16,
       .layoutDirection = CLAY_LEFT_TO_RIGHT,
-      .padding = {16, 16, 16, 16},
+      .childGap = 16,
       .sizing = {
         .width = CLAY_SIZING_GROW(0),
         .height = CLAY_SIZING_GROW(0)
       }
-    },
-    .cornerRadius = {
-      .topLeft = 8,
-      .topRight = 8,
-      .bottomLeft = 8,
-      .bottomRight = 8,
     }
   }) {
-    for (int i = 0; i < ctx->APP_SESSION_total_experiments; ++i) {
-      CLAY({
-        .backgroundColor = {255, 255, 255, 255},
-        .cornerRadius = CLAY_CORNER_RADIUS(8),
-        .layout = {
-          .sizing = {
-            .width = CLAY_SIZING_FIT(60),
-            .height = CLAY_SIZING_FIT(60),
-          },
-          .padding = {10, 10, 10, 10}
+    CLAY({
+      .backgroundColor = {255, 255, 255, 100},
+      .layout = {
+        .childGap = 16,
+        .layoutDirection = width < MAX_WIDTH 
+          ? CLAY_TOP_TO_BOTTOM 
+          : CLAY_LEFT_TO_RIGHT,
+        .padding = CLAY_PADDING_ALL(16),
+        .sizing = {
+          .height = CLAY_SIZING_GROW(0),
+          .width = CLAY_SIZING_PERCENT(0.5)
         }
-      });
+      },
+      .cornerRadius = CLAY_CORNER_RADIUS(8),
+      .clip = {
+        .vertical = true,
+        .horizontal = true,
+        .childOffset = Clay_GetScrollOffset(),
+      }
+    }) {
+      for (int i = 0; i < ctx->APP_SESSION_total_experiments; ++i) {
+        CLAY({
+          .backgroundColor = {255, 255, 255, 255},
+          .cornerRadius = CLAY_CORNER_RADIUS(8),
+          .layout = {
+            .sizing = {
+              .width = width < MAX_WIDTH 
+                ? CLAY_SIZING_PERCENT(0.2) 
+                : CLAY_SIZING_GROW(0.5),
+              .height = CLAY_SIZING_PERCENT(0.15),
+            },
+            .padding = {10, 10, 10, 10}
+          }
+        });
+      }
+
     }
+
+    CLAY({
+      .layout = {
+        .layoutDirection = CLAY_TOP_TO_BOTTOM,
+        .childGap = 16,
+        .padding = CLAY_PADDING_ALL(8),
+        .sizing = {
+          .width = CLAY_SIZING_GROW(0),
+          .height = CLAY_SIZING_GROW(0)
+        },
+      },
+      .backgroundColor = {255, 255, 255, 100},
+      .cornerRadius = CLAY_CORNER_RADIUS(8),
+    }) {
+
+      CLAY({
+        .backgroundColor = {255, 255, 255, 100},
+        .layout = {
+          .layoutDirection = CLAY_LEFT_TO_RIGHT,
+          .padding = CLAY_PADDING_ALL(4),
+          .sizing = {.width = CLAY_SIZING_GROW(0)}
+        },
+        .cornerRadius = CLAY_CORNER_RADIUS(4)
+      }) {
+        CLAY_TEXT(CLAY_STRING("Schema"), CLAY_TEXT_CONFIG({
+          .fontSize = 16,
+          .textColor = {0, 0, 0, 200},
+        }));
+      }
+
+    }
+    
   }
+
 }
 
 
