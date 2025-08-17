@@ -1,4 +1,5 @@
 #include "config.h"
+#include <time.h>
 
 TimeConfig createTimeConfig(
   uint16_t hours,
@@ -14,15 +15,14 @@ TimeConfig createTimeConfig(
   };
 }
 
-DateConfig createDateConfig(
-  uint16_t year,
-  uint8_t  month,
-  uint8_t  day
-  ) {
+DateConfig createDateConfig() {
+  time_t now = time(NULL);
+  struct tm* t = localtime(&now);
+
   return (DateConfig) {
-    .year  = year,
-    .month = month,
-    .day   = day,
+    .year  = t->tm_year + 1900,
+    .month = t->tm_mon + 1,
+    .day   = t->tm_mday,
   };
 }
 

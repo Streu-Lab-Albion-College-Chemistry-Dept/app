@@ -41,9 +41,7 @@ TimeConfig createTimeConfig(uint16_t hours,
                             uint16_t seconds,
                             uint16_t delay);
 
-DateConfig createDateConfig(uint16_t year,
-                            uint8_t  month,
-                            uint8_t  day);
+DateConfig createDateConfig();
 
 ExperimentConfig createExperimentConfig(uint8_t slot, TimeConfig* time);
 
