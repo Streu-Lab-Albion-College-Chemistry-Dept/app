@@ -21,6 +21,7 @@ int main() {
   AppContext context = StartApplication();
   
   SetConfigFlags(FLAG_MSAA_4X_HINT);
+  SetTargetFPS(480);
 
   Clay_Raylib_Initialize(1140, 900, "uvmod", FLAG_WINDOW_RESIZABLE);
   uint64_t totalMemorySize = Clay_MinMemorySize();
