@@ -98,8 +98,8 @@ void experimentFormView(AppContext* ctx) {
   int rectX = (screenWidth - rectWidth) / 2;
   int rectY = (screenHeight - rectHeight) / 2;
 
-
   BeginDrawing();
   DrawRectangle(rectX, rectY, rectWidth, rectHeight, (Color){ 100, 100, 100, 255 });
   EndDrawing();
 }
+
