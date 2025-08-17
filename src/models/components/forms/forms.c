@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <raylib.h>
 #include <clay/clay.h>
 #include "../../../state/state.h"
 #include "./forms.h"
@@ -85,6 +86,20 @@ ExperimentSession* allocateExperimentSessionConfig(ExperimentForm* form) {
 // STATEFUL FORM COMPONENT
 // This component captures the user input and adds it as a form
 
-void experimentFormView(AppContext* ctx) {
 
+void experimentFormView(AppContext* ctx) {
+  int screenWidth = GetScreenWidth();
+  int screenHeight = GetScreenHeight();
+
+  int rectWidth = 300;
+  int rectHeight = 200;
+
+  // Calculate top-left position to center the rectangle
+  int rectX = (screenWidth - rectWidth) / 2;
+  int rectY = (screenHeight - rectHeight) / 2;
+
+
+  BeginDrawing();
+  DrawRectangle(rectX, rectY, rectWidth, rectHeight, (Color){ 100, 100, 100, 255 });
+  EndDrawing();
 }
